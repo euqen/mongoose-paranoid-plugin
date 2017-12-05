@@ -1,7 +1,7 @@
 <h1 align="center">:rocket: Mongoose Paranoid Plugin :rocket:</h1>
 
 <div align="center">
-  <sub>The little plugin that could. Built with ❤︎ by
+  <sub>Built with ❤︎ by
   <a href="https://github.com/euqen">Eugene Shilin</a> and
   <a href="https://github.com/euqen/mongoose-paranoid-plugin/graphs/contributors">
     contributors
@@ -13,7 +13,7 @@ This plugin allows to apply soft deletion of mongo db documents. It's simple, li
 
 ## Philosophy
 
-All existing soft deletion plugins doesn't allow to disable quering by non-deleted documents. They all require to use their own-implemented methods. Sometimes you need to get all documents including deleted, sometimes you need to retrieve only non-deleted. All existing plugins provide their own separate methods to do this. It's not flexible, you need to call different methods depending on situations you faced with.
+All existing soft deletion plugins don't allow to disable quering by non-deleted documents. They all require to use their own-implemented methods. Sometimes you need to get all documents including deleted, sometimes you need to retrieve only non-deleted. All existing plugins provide their own separate methods to do this. It's not flexible, you need to call different methods depending on situations you faced with.
 
 ## Installation
 
