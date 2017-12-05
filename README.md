@@ -1,4 +1,4 @@
-<h1 align="center">:rocket: Mongoose Paranoid Plugin</h1>
+<h1 align="center">:rocket: Mongoose Paranoid Plugin :rocket:</h1>
 
 <div align="center">
   <sub>The little plugin that could. Built with ❤︎ by
@@ -7,6 +7,7 @@
     contributors
   </a>
 </div>
+<br />
   
 This plugin allows to apply soft deletion of mongo db documents. It's simple, lightweight and easy to use. Inspired by Sequelize.
 
