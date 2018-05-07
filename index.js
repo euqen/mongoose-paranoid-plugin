@@ -1,13 +1,15 @@
 var Model = require('mongoose').Model;
 
-module.exports = function MongooseParanoidPlugin(schema) {
+module.exports = function MongooseParanoidPlugin(schema, options) {
+    var field = options.field || 'deletedAt';
+    
     schema.add({
-        deletedAt: {
+        [field]: {
             type: Date
         }
     });
 
-    ['find', 'findOne', 'updateOne', 'count'].forEach(function (method) {
+    ['find', 'findOne', 'updateOne', 'count', 'update'].forEach(function (method) {
         schema.static(method, function () {
             var isParanoidDisabled = schema.options.paranoid !== true || this.paranoidOpt === false;
 
@@ -15,7 +17,7 @@ module.exports = function MongooseParanoidPlugin(schema) {
                 return Model[method].apply(this, arguments);
             }
 
-            return Model[method].apply(this, arguments).where('deletedAt').exists(false);
+            return Model[method].apply(this, arguments).where(field).exists(false);
         });
     });
 
@@ -27,7 +29,19 @@ module.exports = function MongooseParanoidPlugin(schema) {
 
     schema.static('restore', function (conditions, callback) {
         return this.paranoid(false).update(conditions, {
-            deletedAt: undefined,
+            [field]: undefined,
         }, { multi: true }, callback);
+    });
+
+    schema.static('deleteOne', function(conditions, callback) {
+        var isParanoidDisabled = schema.options.paranoid !== true || this.paranoidOpt === false;
+
+        if (isParanoidDisabled) {
+            return Model.deleteOne.apply(this, arguments);
+        }
+
+        return this.update(conditions, {
+            [field]: new Date(),
+        }, callback);
     });
 };

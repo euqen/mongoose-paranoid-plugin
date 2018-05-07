@@ -1,0 +1,30 @@
+{
+  "name": "mongoose-paranoid-plugin",
+  "version": "0.0.1",
+  "description": "Mongoose soft deletion plugin ",
+  "main": "index.js",
+  "peerDependencies": {
+    "mongoose": "4.x"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/euqen/mongoose-paranoid-plugin.git"
+  },
+  "keywords": [
+    "mongoose",
+    "delete",
+    "paranoid",
+    "soft",
+    "mongo"
+  ],
+  "author": "Eugene Shilin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/euqen/mongoose-paranoid-plugin/issues"
+  },
+  "homepage": "https://github.com/euqen/mongoose-paranoid-plugin#readme"
+}
