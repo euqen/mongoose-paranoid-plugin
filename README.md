@@ -37,7 +37,7 @@ mongoose.plugin(mongooseParanoidPlugin, { field: 'deleted_at })
 
 Options:
 
-- field: String. Colunm name which is used to store timestamp of deletion. Default value is 'deletedAt'
+- field: String. Column name which is used to store timestamp of deletion. Default value is 'deletedAt'
 
 ### Using in schemas
 
