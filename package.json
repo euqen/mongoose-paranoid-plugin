@@ -1,6 +1,6 @@
 {
   "name": "mongoose-paranoid-plugin",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Mongoose soft deletion plugin ",
   "main": "index.js",
   "peerDependencies": {
