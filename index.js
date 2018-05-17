@@ -1,6 +1,10 @@
 var Model = require('mongoose').Model;
 
 module.exports = function MongooseParanoidPlugin(schema, options) {
+    if (schema.options.paranoid !== true) {
+        return; // skip overriding native methods if paranoid is not enabled explicitly
+    }
+
     var field = options.field || 'deletedAt';
     
     schema.add({
@@ -11,9 +15,10 @@ module.exports = function MongooseParanoidPlugin(schema, options) {
 
     ['find', 'findOne', 'updateOne', 'count', 'update'].forEach(function (method) {
         schema.static(method, function () {
-            var isParanoidDisabled = schema.options.paranoid !== true || this.paranoidOpt === false;
+            var args = Array.from(arguments);
+            var isParanoidManuallyDisabled = args && args[2] && args[2].paranoid === false;
 
-            if (isParanoidDisabled) {
+            if (this.isParanoidDisabled || isParanoidManuallyDisabled) {
                 return Model[method].apply(this, arguments);
             }
 
@@ -22,26 +27,32 @@ module.exports = function MongooseParanoidPlugin(schema, options) {
     });
 
     schema.static('paranoid', function(paranoid) {
-        this.paranoidOpt = paranoid;
+        this.isParanoidDisabled = paranoid === false;
 
         return this;
     });
 
-    schema.static('restore', function (conditions, callback) {
+    schema.static('restore', function (conditions, options, callback) {
         return this.paranoid(false).update(conditions, {
-            [field]: undefined,
-        }, { multi: true }, callback);
+            $unset: { [field]: '' },
+        }, options, callback);
     });
 
-    schema.static('deleteOne', function(conditions, callback) {
-        var isParanoidDisabled = schema.options.paranoid !== true || this.paranoidOpt === false;
+    ['deleteMany', 'deleteOne', 'remove'].forEach(function(method) {
+        schema.static(method, function(conditions, options, callback) {
+            if (options && typeof options === 'function') {
+                callback = options;
+            }
 
-        if (isParanoidDisabled) {
-            return Model.deleteOne.apply(this, arguments);
-        }
+            var isParanoidManuallyDisabled = options && options.paranoid === false;
 
-        return this.update(conditions, {
-            [field]: new Date(),
-        }, callback);
+            if (this.isParanoidDisabled || isParanoidManuallyDisabled) {
+                return Model[method].apply(this, [conditions, callback]);
+            }
+
+            return this.update(conditions, {
+                [field]: new Date(),
+            }, callback);
+        });
     });
 };
