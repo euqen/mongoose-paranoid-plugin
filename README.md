@@ -72,7 +72,7 @@ return User.find(query, { paranoid: false });
 
 ### Soft deletion behavior
 
-The behavior of remove method is also very expicit. If you enabled soft deletion in your schema, `remove` method will mark the document with deletedAt field. Otherwise the document will be completely removed. You can also use `paranoid` method before removing to enable/disable soft deletion.
+The behavior of remove method is also very explicit. If you enabled soft deletion in your schema, `remove` method will mark the document with deletedAt field. Otherwise the document will be completely removed. You can also use `paranoid` method before removing to enable/disable soft deletion.
 
 
 ## Copyright
