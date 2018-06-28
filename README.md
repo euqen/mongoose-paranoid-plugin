@@ -49,7 +49,7 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
   firstName: { type: String },
   lastName: { type: String }
-}, {
+}, {[projection]}, {
   paranoid: true,
 });
 
@@ -61,7 +61,7 @@ This will enable soft deletion of your documents. All deleted models will be mar
 Way1:
 
 ```
-return User.find(query, { paranoid: false });
+return User.find(query, {} { paranoid: false });
 ```
 
 ### Soft deletion behavior
