@@ -8,7 +8,7 @@
   </a>
 </div>
 <br />
-  
+
 This plugin allows to apply soft deletion of mongo db documents. It's simple, lightweight and easy to use. Inspired by Sequelize.
 
 ## Philosophy
@@ -31,7 +31,7 @@ npm install mongoose-paranoid-plugin
 const mongoose = require('mongoose');
 const mongooseParanoidPlugin = require('mongoose-paranoid-plugin');
 
-mongoose.plugin(mongooseParanoidPlugin, { field: 'deleted_at })
+mongoose.plugin(mongooseParanoidPlugin, { field: 'deleted_at' })
 
 ```
 
@@ -41,33 +41,27 @@ Options:
 
 ### Using in schemas
 
-By default this plugin won't override any methods. To enable soft deletion of your document's you need to pass `paranoid` option into your model options. 
+By default this plugin won't override any methods. To enable soft deletion of your document's you need to pass `paranoid` option into your model options.
 
 ```
 const mongoose = require('mongoose');
 
-const schema = new mongoose.Schema({ 
+const schema = new mongoose.Schema({
   firstName: { type: String },
   lastName: { type: String }
-}, {
+}, {[projection]}, {
   paranoid: true,
 });
 
 const User = meta.model('users', schema);
 ```
 
-This will enable soft deletion of your documents. All deleted models will be marked with `deletedAt` field by default and will not be retrieved by built-in mongoose methods. If you need to include deleted documents you need either to call `.paranoid` method before querying or just pass an attribute `{ paranoid: false }` to query options.
+This will enable soft deletion of your documents. All deleted models will be marked with `deletedAt` field by default and will not be retrieved by built-in mongoose methods. If you need to include deleted documents you need pass an attribute `{ paranoid: false }` to query options.
 
-Way 1:
-
-```
-return User.paranoid(false).find(query);
-```
-
-Way2:
+Way1:
 
 ```
-return User.find(query, { paranoid: false });
+return User.find(query, {} { paranoid: false });
 ```
 
 ### Soft deletion behavior
