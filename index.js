@@ -6,7 +6,7 @@ module.exports = function MongooseParanoidPlugin(schema, options) {
     }
 
     var field = options.field || 'deletedAt';
-    
+
     schema.add({
         [field]: {
             type: Date
@@ -26,14 +26,10 @@ module.exports = function MongooseParanoidPlugin(schema, options) {
         });
     });
 
-    schema.static('paranoid', function(paranoid) {
-        this.isParanoidDisabled = paranoid === false;
-
-        return this;
-    });
-
     schema.static('restore', function (conditions, options, callback) {
-        return this.paranoid(false).update(conditions, {
+        options.paranoid = false;
+
+        return this.update(conditions, {
             $unset: { [field]: '' },
         }, options, callback);
     });
