@@ -58,10 +58,9 @@ const User = meta.model('users', schema);
 
 This will enable soft deletion of your documents. All deleted models will be marked with `deletedAt` field by default and will not be retrieved by built-in mongoose methods. If you need to include deleted documents you need pass an attribute `{ paranoid: false }` to query options.
 
-Way1:
 
 ```
-return User.find(query, {} { paranoid: false });
+return User.find(query, {}, { paranoid: false });
 ```
 
 ### Soft deletion behavior
