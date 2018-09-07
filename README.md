@@ -49,7 +49,7 @@ const mongoose = require('mongoose');
 const schema = new mongoose.Schema({
   firstName: { type: String },
   lastName: { type: String }
-}, {[projection]}, {
+}, {
   paranoid: true,
 });
 
