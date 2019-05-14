@@ -46,9 +46,15 @@ module.exports = function MongooseParanoidPlugin(schema, options) {
                 return Model[method].apply(this, [conditions, callback]);
             }
 
-            return this.update(conditions, {
-                [field]: new Date(),
-            }, callback);
+            if (method === 'deleteMany') {
+                return this.updateMany(conditions, {
+                    [field]: new Date()
+                }, options, callback)
+            } else {
+                return this.update(conditions, {
+                    [field]: new Date()
+                }, options, callback)
+            }
         });
     });
 };
