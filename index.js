@@ -51,7 +51,7 @@ module.exports = function MongooseParanoidPlugin(schema, options) {
                     [field]: new Date()
                 }, options, callback)
             } else {
-                return this.update(conditions, {
+                return this.updateOne(conditions, {
                     [field]: new Date()
                 }, options, callback)
             }
