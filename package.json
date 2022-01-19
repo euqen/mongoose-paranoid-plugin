@@ -5,7 +5,7 @@
   "main": "index.js",
   "types": "index.d.ts",
   "peerDependencies": {
-    "mongoose": "4.x"
+    "mongoose": "6.x"
   },
   "devDependencies": {},
   "scripts": {
