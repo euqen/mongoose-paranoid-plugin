@@ -3,6 +3,7 @@
   "version": "1.1.2",
   "description": "Mongoose soft deletion plugin ",
   "main": "index.js",
+  "types": "index.d.ts",
   "peerDependencies": {
     "mongoose": "4.x"
   },
