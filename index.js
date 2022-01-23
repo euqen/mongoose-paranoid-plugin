@@ -33,7 +33,7 @@ module.exports = function MongooseParanoidPlugin(schema, options = {}) {
         }, options, callback);
     });
 
-    ['deleteMany', 'deleteOne', 'remove'].forEach(function(method) {
+    ['deleteMany', 'deleteOne', 'remove', 'findOneAndDelete', 'findByIdAndDelete'].forEach(function(method) {
         schema.static(method, function(conditions, options, callback) {
             if (options && typeof options === 'function') {
                 callback = options;
@@ -45,15 +45,19 @@ module.exports = function MongooseParanoidPlugin(schema, options = {}) {
                 return Model[method].apply(this, [conditions, callback]);
             }
 
-            if (method === 'deleteMany') {
+            if (method === 'deleteMany')
                 return this.updateMany(conditions, {
                     [field]: new Date()
                 }, options, callback)
-            } else {
-                return this.updateOne(conditions, {
+
+            return this.updateOne(
+                method === 'findByIdAndDelete' ? { _id: conditions } : conditions,
+                {
                     [field]: new Date()
-                }, options, callback)
-            }
+                },
+                options,
+                callback
+            )
         });
     });
 };
